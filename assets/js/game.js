@@ -20,9 +20,9 @@ $(document).ready(function(){
     correctAnswer: 0
 }];
 
-var currentQuestion = 0;
-var correctAnswers = 0;
-var gameOver = false;
+    var currentQuestion = 0;=
+    var correctAnswers = 0;
+    var gameOver = false;
 
 // Game Timer
 function GameTimer() {
@@ -32,7 +32,7 @@ function GameTimer() {
         remainingSeconds = "0" + remainingSeconds;
     }
     document.getElementById('waiting_time').innerHTML ="Time Remaining " + minutes + ":" + remainingSeconds;
-    if (seconds == 0) {
+    if (seconds === 0) {
         isRunning = true;
         seconds += 0;
         
@@ -57,14 +57,14 @@ function GameTimer() {
 
             value = $("input[type='radio']:checked").val();
 
-            if (value == undefined) {
+            if (value === undefined) {
                 $(document).find(".gameMessage").text("Please select an answer");
                 $(document).find(".gameMessage").show();
             } else {
                 // TODO: Remove any message -> not sure if this is efficient to call this each time....
                 $(document).find(".gameMessage").hide();
 
-                if (value == questions[currentQuestion].correctAnswer) {
+                if (value === questions[currentQuestion].correctAnswer) {
                     correctAnswers++;
                 }
 

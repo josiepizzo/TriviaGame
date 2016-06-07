@@ -26,26 +26,23 @@ h1{
 }
 
 #qscreen {
-background: white;
-display: none;
-height: 10000px;
-left: 0px;
-position: absolute;
-text-align: center;
-top: 0px;
-width: 100%;
-z-index: 999;
+    background: white;
+    display: none;
+    height: 10000px;
+    left: 0px;
+    position: absolute;
+    text-align: center;
+    top: 0px;
+    width: 100%;
+    z-index: 999;
 }
 #qscreen p { 
-	padding: 0 10% 0 10%; 
+    padding: 0 10% 0 10%; 
 }
-#q2, #q3{
-	display: none;
-}
-#waiting_time{
-	font-size: 25px
-	margin-top:10px;
-	width:300px;
+#waiting_time {
+    font-size: 25px;
+    margin-top:10px;
+    width:300px;
 }
 /* css for questions*/
 ul {
