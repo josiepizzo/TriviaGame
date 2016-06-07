@@ -1,48 +1,126 @@
 $(document).ready(function(){
-	var question;			//question to be displayed
-	var answer;				//answer to be displayed
-	var	restore;			//this clears the click for the next step
-	var innerCell		    //cell for the onclick
-	var score = 0;         // keeps track of number of score
-	var activecell;		//active cell
+// Timer 
+    var isWaiting = false;
+    var isRunning = false;
+    var seconds = 20;
+    var countdownTimer;
+    var finalCountdown = false;
 
-// Get elements
-	var iCell = $('.inner-cell');
-  var showquestion = $('.question');
-  var showanswer = $('.answer');
+    var questions = [{
+    question: "What is the name of the character that Diane Keaton plays?",
+    choices: ["Ellen", "Kay", "Connie", "Lucy"],
+    correctAnswer: 1
+}, {
+    question: "The Godfather was based on a novel written by...?",
+    choices: ["Francis Coppola", "Lorenzo Veti", "Mario Puzo", "Stan Howard"],
+    correctAnswer: 0
+}, {
+    question: "Which member of the Corleone family was the first to meet Tom Hagen?",
+    choices: ["Sonny", "Freddie", "Conni", "Vito"],
+    correctAnswer: 0
+}];
 
-// Displays question.
-function showquestion(){
-    $('#qscreen').show();
-    $('#qscreen').html(item);
-    $('#qscreen').attr('onclick','showanswer()');
+var currentQuestion = 0;
+var correctAnswers = 0;
+var gameOver = false;
+
+// Game Timer
+function GameTimer() {
+    var minutes = Math.round((seconds - 30) / 60);
+    var remainingSeconds = seconds % 60;
+    if (remainingSeconds < 10) {
+        remainingSeconds = "0" + remainingSeconds;
+    }
+    document.getElementById('waiting_time').innerHTML ="Time Remaining " + minutes + ":" + remainingSeconds;
+    if (seconds == 0) {
+        isRunning = true;
+        seconds += 0;
+        
+        if (finalCountdown) {
+            clearInterval(countdownTimer);
+        } else {
+            finalCountdown = true;
+        }
+
+    } else {
+        isWaiting = true;
+        seconds--;
+    }
 }
-// Displays Answer.
-function showanswer(){
-    $('#qscreen .question').hide();
-    $('#qscreen .answer').show();
-    $('#qscreen').attr('onclick','restore()');
+// Display the first question
+    displayCurrentQuestion();
+    $(this).find(".gameMessage").hide();
+
+    // On clicking next, display the next question
+    $(this).find(".nextButton").on("click", function () {
+        if (!gameOver) {
+
+            value = $("input[type='radio']:checked").val();
+
+            if (value == undefined) {
+                $(document).find(".gameMessage").text("Please select an answer");
+                $(document).find(".gameMessage").show();
+            } else {
+                // TODO: Remove any message -> not sure if this is efficient to call this each time....
+                $(document).find(".gameMessage").hide();
+
+                if (value == questions[currentQuestion].correctAnswer) {
+                    correctAnswers++;
+                }
+
+                currentQuestion++; // Since we have already displayed the first question on DOM ready
+                if (currentQuestion < questions.length) {
+                    displayCurrentQuestion();
+                } else {
+                    displayScore();
+                    $(document).find(".nextButton").text("Play Again?");
+                    gameOver = true;
+                }
+            }
+        } else { // game is over and clicked the next button (which now displays 'Play Again?'
+            gameOver = false;
+            $(document).find(".nextButton").text("Next Question");
+            resetGame();
+            displayCurrentQuestion();
+            hideScore();
+        }
+    });
+
+
+// This displays the current question AND the choices
+function displayCurrentQuestion() {
+
+    console.log("In display current Question");
+
+    var question = questions[currentQuestion].question;
+    var questionClass = $(document).find(".gameContainer > .question");
+    var choiceList = $(document).find(".gameContainer > .choiceList");
+    var numChoices = questions[currentQuestion].choices.length;
+
+    // Set the questionClass text to the current question
+    $(questionClass).text(question);
+
+    // Remove all current <li> elements (if any)
+    $(choiceList).find("li").remove();
+
+    var choice;
+    for (i = 0; i < numChoices; i++) {
+        choice = questions[currentQuestion].choices[i];
+        $('<li><input type="radio" value=' + i + ' name="dynradio" />' + choice + '</li>').appendTo(choiceList);
+    }
 }
-// Restores the cells to display the next step in the game
-function restore(){
-    $('.activecell .answer').show();
-    $('.activecell .question').show();
-    $('.activecell .question').css('font-size','14px');
-    $('.activecell .answer').css('font-size','14px');
-    $('.activecell').removeClass('activecell');
-    $('#qscreen').attr('onclick','showanswer()');
-    $('#qscreen').hide();
+
+function resetGame() {
+    currentQuestion = 0;
+    correctAnswers = 0;
+    hideScore();
 }
-//THIS DISPLAYED ALL QUESTIONS NEED TO ADJUST CODE TO DISPLAY ONLY ONE AT A TIME
-$('#q1').on("click", function(){
-  $('.question').show();
+
+function displayScore() {
+    $(document).find(".gameContainer > .result").text("You scored: " + correctAnswers + " out of: " + questions.length);
+    $(document).find(".gameContainer > .result").show();
+};
+
 });
 
-$(document).ready(function(){
-    $('#qscreen').css('padding-top',0.33*screen.height);    
-    $('#qscreen').show();
-    setTimeout("$('#x').html('vin')",2000);
-    $('#qscreen').append('<div style="position:absolute;bottom:0px;right:-100px"><a href="http://vimeo.com/47875656" style="color:#f1f1f1;" target="_blank">Muscles</a></div><div"><marquee style="position:absolute;bottom:0px"><h1>All Your Base Are Belong To Us</h1></marquee></div>');
-});
 
-});

@@ -5,15 +5,110 @@ body{
 h1{
 	font-size:30px;
 }
-#qscreen {
-display: none;
-position: absolute;
-top: 0px;
-left: 0px;
-height: 10000px;
-width: 100%;
-background: white;
-z-index: 999;
-text-align: center;
+.container {
+    margin: auto;
+    width: 950px;
 }
-#qscreen p { padding: 0 10% 0 10%; }
+.black{
+	padding-top: 150px !important;
+}
+.img1{
+	float: right;
+	height: 522px;
+	padding-left: 50px;
+	width: 445px;
+}
+.img2{
+	float: left;
+	height: 260px;
+	margin-bottom: 70px;
+	width: 378px;
+}
+
+#qscreen {
+background: white;
+display: none;
+height: 10000px;
+left: 0px;
+position: absolute;
+text-align: center;
+top: 0px;
+width: 100%;
+z-index: 999;
+}
+#qscreen p { 
+	padding: 0 10% 0 10%; 
+}
+#q2, #q3{
+	display: none;
+}
+#waiting_time{
+	font-size: 25px
+	margin-top:10px;
+	width:300px;
+}
+/* css for questions*/
+ul {
+    list-style: none;
+}
+li {
+    font-size: 2em;
+}
+input[type=radio] {
+    border: 0px;
+    height: 1em;
+    margin: 10px 20px 0px 0px;
+    width: 20px;
+}
+/* Game Classes */
+.question{
+	font-size: 35px;
+	margin-bottom: 20px;
+	padding-top:20px;
+	position: relative;
+	width: 64%;
+}
+ .gameContainer {
+    position: relative;
+    width: 70%;
+}
+.nextButton {
+    /*clear: both;*/
+    background-color: lightgrey;
+    border-radius: 6px;
+    box-shadow: 3px 3px 5px #888;
+    color: red;
+    height: 40px;
+    margin: auto;
+    padding-top: 10px;
+    position: relative;
+    text-align: center;
+    width: 150px;
+}
+.gameMessage {
+    background-color: peachpuff;
+    border-radius: 6px;
+    color: red;
+    margin: 20px auto 15px auto;
+    padding: 2px;
+    text-align: center;
+    width: 35%;
+}
+.choiceList {
+    color: black;
+    font-size: 25px;
+}
+.result {
+    background-color: black;
+    border-radius: 6px;
+    color:white;
+    display: none;
+    font-weight: bold;
+    height: auto;
+    margin: 20px auto 15px auto;
+    padding: 15px;
+    text-align: center;
+    width: 40%;
+}
+/* End of Game */
+
