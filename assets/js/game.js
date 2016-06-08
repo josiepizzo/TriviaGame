@@ -2,9 +2,10 @@ $(document).ready(function(){
 // Timer 
     var isWaiting = false;
     var isRunning = false;
-    var seconds = 20;
+    var seconds = 5;
     var countdownTimer;
     var finalCountdown = false;
+    var waitingTimeDiv = document.getElementById('waiting_time')
 
     var questions = [{
     question: "What is the name of the character that Diane Keaton plays?",
@@ -20,52 +21,73 @@ $(document).ready(function(){
     correctAnswer: 0
 }];
 
-    var currentQuestion = 0;=
+    var currentQuestion = 0;
     var correctAnswers = 0;
     var gameOver = false;
 
+//this is where we call the GameTimer function
+$("#qscreen").click(function(){
+    $(this).fadeOut('slow');
+    GameTimer();
+
+})
 // Game Timer
 function GameTimer() {
-    var minutes = Math.round((seconds - 30) / 60);
-    var remainingSeconds = seconds % 60;
-    if (remainingSeconds < 10) {
-        remainingSeconds = "0" + remainingSeconds;
-    }
-    document.getElementById('waiting_time').innerHTML ="Time Remaining " + minutes + ":" + remainingSeconds;
-    if (seconds === 0) {
-        isRunning = true;
-        seconds += 0;
-        
-        if (finalCountdown) {
-            clearInterval(countdownTimer);
-        } else {
-            finalCountdown = true;
-        }
-
-    } else {
-        isWaiting = true;
+    // var minutes = Math.round((seconds - 30) / 60);
+    // var remainingSeconds = seconds % 60;
+    var countdownTimer = setInterval(function(){
         seconds--;
-    }
+        if (seconds === 0) {
+        alert("Times up");
+        seconds = "0" + seconds;
+        clearInterval(countdownTimer);
+        //game over
+        }
+        else if (seconds < 10) {
+        seconds = "0" + seconds;
+        }
+        waitingTimeDiv.innerHTML ="Time Remaining " + "00" + ":" + seconds;
+        
+    },1000 )
+    
+
+    // waitingTimeDiv.innerHTML ="Time Remaining " + minutes + ":" + remainingSeconds;
+    // if (seconds === 0) {
+    //     isRunning = true;
+    //     seconds += 0;
+        
+    //     if (finalCountdown) {
+    //         clearInterval(countdownTimer);
+    //     } else {
+    //         finalCountdown = true;
+    //     }
+
+    // } else {
+    //     isWaiting = true;
+    //     seconds--;
+    // }
 }
 // Display the first question
     displayCurrentQuestion();
     $(this).find(".gameMessage").hide();
 
-    // On clicking next, display the next question
+// On clicking next, display the next question
     $(this).find(".nextButton").on("click", function () {
+        seconds = 20;
         if (!gameOver) {
 
             value = $("input[type='radio']:checked").val();
 
-            if (value === undefined) {
+            if (value == undefined) {
                 $(document).find(".gameMessage").text("Please select an answer");
                 $(document).find(".gameMessage").show();
             } else {
                 // TODO: Remove any message -> not sure if this is efficient to call this each time....
                 $(document).find(".gameMessage").hide();
 
-                if (value === questions[currentQuestion].correctAnswer) {
+                if (value == questions[currentQuestion].correctAnswer) {
                     correctAnswers++;
+                    
                 }
 
                 currentQuestion++; // Since we have already displayed the first question on DOM ready
