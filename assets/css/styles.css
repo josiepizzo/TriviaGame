@@ -68,7 +68,7 @@ input[type=radio] {
     position: relative;
     width: 70%;
 }
-.nextButton {
+.nextButton, #playAgain {
     /*clear: both;*/
     background-color: lightgrey;
     border-radius: 6px;

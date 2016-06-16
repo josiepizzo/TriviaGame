@@ -2,7 +2,7 @@ $(document).ready(function(){
 // Timer 
     var isWaiting = false;
     var isRunning = false;
-    var seconds = 5;
+    var seconds = 15;
     var countdownTimer;
     var finalCountdown = false;
     var waitingTimeDiv = document.getElementById('waiting_time')
@@ -49,23 +49,7 @@ function GameTimer() {
         waitingTimeDiv.innerHTML ="Time Remaining " + "00" + ":" + seconds;
         
     },1000 )
-    
 
-    // waitingTimeDiv.innerHTML ="Time Remaining " + minutes + ":" + remainingSeconds;
-    // if (seconds === 0) {
-    //     isRunning = true;
-    //     seconds += 0;
-        
-    //     if (finalCountdown) {
-    //         clearInterval(countdownTimer);
-    //     } else {
-    //         finalCountdown = true;
-    //     }
-
-    // } else {
-    //     isWaiting = true;
-    //     seconds--;
-    // }
 }
 // Display the first question
     displayCurrentQuestion();
@@ -73,7 +57,7 @@ function GameTimer() {
 
 // On clicking next, display the next question
     $(this).find(".nextButton").on("click", function () {
-        seconds = 20;
+        seconds = 15;
         if (!gameOver) {
 
             value = $("input[type='radio']:checked").val();
@@ -95,12 +79,12 @@ function GameTimer() {
                     displayCurrentQuestion();
                 } else {
                     displayScore();
-                    $(document).find(".nextButton").text("Play Again?");
+                    $(document).find(".nextButton").removeClass("nextButton").attr('id', 'playAgain').text("Play Again?");
                     gameOver = true;
                 }
             }
         } else { // game is over and clicked the next button (which now displays 'Play Again?'
-            gameOver = false;
+            gameOver = falsee;
             $(document).find(".nextButton").text("Next Question");
             resetGame();
             displayCurrentQuestion();
@@ -131,11 +115,13 @@ function displayCurrentQuestion() {
         $('<li><input type="radio" value=' + i + ' name="dynradio" />' + choice + '</li>').appendTo(choiceList);
     }
 }
-
+//Event listner for the #playAgain btn
+$(document).on("click","#playAgain", function () {
+    resetGame();
+});
 function resetGame() {
     currentQuestion = 0;
     correctAnswers = 0;
-    hideScore();
 }
 
 function displayScore() {
